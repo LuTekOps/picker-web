@@ -347,7 +347,8 @@
         } else if (updated.status === 401 || updated.status === 403) {
           show('view-invalid'); // recovery session expired
         } else {
-          setFormError(t.errorUnknown);
+          // Append the server's code (e.g. current_password_required) so a screenshot is enough to debug.
+          setFormError(t.errorUnknown + (updated.code ? ' (' + updated.code + ')' : ' (HTTP ' + updated.status + ')'));
         }
         return;
       }
