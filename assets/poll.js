@@ -1,10 +1,12 @@
 // Picker share link page (404.html, served for /p/{pollId}): vote in the browser without the app.
 //
 // For people who can't install the app (iPhone, desktop) or don't want to. Same rules as the app's guest access:
-// 1. Year of birth + terms first (minimum age 16, as in the app). Under 16: nothing is created, the browser
-//    remembers only a "blocked" flag.
+// 1. Year of birth + terms first (minimum age 16, as in the app). Under 16: nothing is created (an existing guest
+//    access is deleted), the browser remembers only a "blocked" flag. A guest whose accepted terms version is
+//    older than TERMS_VERSION is asked again, like in the app, and the new version goes into the same guest access.
 // 2. A guest access (Supabase anonymous sign-in, with a Cloudflare Turnstile token like the app) carrying the
-//    accepted terms version in its metadata. The session stays in this browser's localStorage, so coming back
+//    accepted terms version and client "web" in its metadata; run_retention deletes such guests 6 months after
+//    their creation (privacy policy, section 10). The session stays in this browser's localStorage, so coming back
 //    shows the own vote and the results.
 // 3. get_poll / cast_vote, the same RPCs the app uses; RLS and the functions decide what may be seen.
 // The Play button passes the poll id on as install referrer, so the app opens the poll on its first start.
@@ -24,7 +26,7 @@
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdsZWJjenB0dnlvb2p6bm9odHNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2MzIwMjQsImV4cCI6MjEwNDIwODAyNH0.BGpBfEiayPSc5xAj8LYw-cqEZcRqIB4GFLYE6vGGS90';
   const TURNSTILE_SITE_KEY = '0x4AAAAAAFRKi8pTcNPGzBfH';
   // Must match Legal.TERMS_VERSION in the app: a guest created here counts as having accepted this version.
-  const TERMS_VERSION = '2026-10-17';
+  const TERMS_VERSION = '2026-10-18';
   const MINIMUM_AGE = 16;
   const PLAY_URL = 'https://play.google.com/store/apps/details?id=ch.lutekops.picker';
   const SESSION_KEY = 'picker.webSession';
@@ -35,6 +37,7 @@
       title: 'Picker · Poll',
       consentTitle: "You're invited to a poll",
       consentBody: 'Vote right here in your browser, no app and no account needed. Works on iPhone too.',
+      consentUpdated: 'We have updated the Terms of Use and the Privacy Policy. Please confirm them to keep voting.',
       birthYear: 'Year of birth',
       birthYearPick: 'Choose',
       accept: 'I am at least {age} years old, accept the {terms} and have read the {privacy}.',
@@ -60,7 +63,7 @@
       missingTitle: 'Poll not found',
       missingBody: 'It was deleted or hidden, or it is private. Private polls only open in the app for the people they were sent to.',
       blockedTitle: 'Picker is for ages 16 and up',
-      blockedBody: "Based on your year of birth you can't use Picker yet. Nothing was saved about you.",
+      blockedBody: "Based on your year of birth you can't use Picker yet. We keep no data about you; this browser only remembers this notice.",
       promo: 'Want to ask your own questions? Get the Picker app. It is Android-only for now.',
       play: 'Get it on Google Play',
     },
@@ -68,6 +71,7 @@
       title: 'Picker · Umfrage',
       consentTitle: 'Du bist zu einer Umfrage eingeladen',
       consentBody: 'Stimm direkt hier im Browser ab, ohne App und ohne Konto. Das geht auch auf dem iPhone.',
+      consentUpdated: 'Wir haben die Nutzungsbedingungen und die Datenschutzerklärung aktualisiert. Bitte bestätige sie, um weiter abzustimmen.',
       birthYear: 'Geburtsjahr',
       birthYearPick: 'Auswählen',
       accept: 'Ich bin mindestens {age} Jahre alt, akzeptiere die {terms} und habe die {privacy} gelesen.',
@@ -93,7 +97,7 @@
       missingTitle: 'Umfrage nicht gefunden',
       missingBody: 'Sie wurde gelöscht oder ausgeblendet, oder sie ist privat. Private Umfragen öffnen sich nur in der App und nur für die Leute, an die sie geschickt wurden.',
       blockedTitle: 'Picker ist ab 16',
-      blockedBody: 'Nach deinem Geburtsjahr kannst du Picker noch nicht nutzen. Über dich wurde nichts gespeichert.',
+      blockedBody: 'Nach deinem Geburtsjahr kannst du Picker noch nicht nutzen. Wir behalten keine Daten über dich; dieser Browser merkt sich nur diesen Hinweis.',
       promo: 'Selbst etwas fragen? Hol dir die Picker-App. Sie gibt es vorerst nur für Android.',
       play: 'Bei Google Play laden',
     },
@@ -101,6 +105,7 @@
       title: 'Picker · Sondage',
       consentTitle: 'Tu es invité·e à un sondage',
       consentBody: 'Vote directement ici dans ton navigateur, sans app et sans compte. Ça marche aussi sur iPhone.',
+      consentUpdated: "Nous avons mis à jour les conditions d'utilisation et la politique de confidentialité. Confirme-les pour continuer à voter.",
       birthYear: 'Année de naissance',
       birthYearPick: 'Choisir',
       accept: "J'ai au moins {age} ans, j'accepte les {terms} et j'ai lu la {privacy}.",
@@ -126,7 +131,7 @@
       missingTitle: 'Sondage introuvable',
       missingBody: "Il a été supprimé ou masqué, ou il est privé. Les sondages privés s'ouvrent seulement dans l'app, pour les personnes à qui ils ont été envoyés.",
       blockedTitle: 'Picker, c’est à partir de 16 ans',
-      blockedBody: "Selon ton année de naissance, tu ne peux pas encore utiliser Picker. Rien n'a été enregistré à ton sujet.",
+      blockedBody: "Selon ton année de naissance, tu ne peux pas encore utiliser Picker. Nous ne conservons aucun renseignement à ton sujet; ce navigateur se souvient seulement de cet avis.",
       promo: "Envie de poser tes propres questions? Télécharge l'app Picker. Elle existe pour l'instant seulement sur Android.",
       play: 'Disponible sur Google Play',
     },
@@ -134,6 +139,7 @@
       title: 'Picker · Sondaggio',
       consentTitle: 'Sei invitato/a a un sondaggio',
       consentBody: 'Vota direttamente qui nel browser, senza app e senza account. Funziona anche su iPhone.',
+      consentUpdated: "Abbiamo aggiornato le Condizioni d'uso e l'Informativa sulla privacy. Confermale per continuare a votare.",
       birthYear: 'Anno di nascita',
       birthYearPick: 'Scegli',
       accept: 'Ho almeno {age} anni, accetto le {terms} e ho letto l’{privacy}.',
@@ -159,7 +165,7 @@
       missingTitle: 'Sondaggio non trovato',
       missingBody: 'È stato eliminato o nascosto, oppure è privato. I sondaggi privati si aprono solo nell’app, per le persone a cui sono stati inviati.',
       blockedTitle: 'Picker è dai 16 anni in su',
-      blockedBody: 'In base al tuo anno di nascita non puoi ancora usare Picker. Non è stato salvato nulla su di te.',
+      blockedBody: 'In base al tuo anno di nascita non puoi ancora usare Picker. Non conserviamo alcun dato su di te; questo browser ricorda solo questo avviso.',
       promo: 'Vuoi fare le tue domande? Scarica l’app Picker. Per ora esiste solo per Android.',
       play: 'Disponibile su Google Play',
     },
@@ -167,6 +173,7 @@
       title: 'Picker · Encuesta',
       consentTitle: 'Te invitaron a una encuesta',
       consentBody: 'Vota aquí mismo en tu navegador, sin app y sin cuenta. También funciona en iPhone.',
+      consentUpdated: 'Hemos actualizado las condiciones de uso y la política de privacidad. Confírmalas para seguir votando.',
       birthYear: 'Año de nacimiento',
       birthYearPick: 'Elegir',
       accept: 'Tengo al menos {age} años, acepto las {terms} y he leído la {privacy}.',
@@ -192,7 +199,7 @@
       missingTitle: 'Encuesta no encontrada',
       missingBody: 'Se eliminó u ocultó, o es privada. Las encuestas privadas solo se abren en la app, para las personas a quienes se enviaron.',
       blockedTitle: 'Picker es a partir de 16 años',
-      blockedBody: 'Según tu año de nacimiento todavía no puedes usar Picker. No se guardó nada sobre ti.',
+      blockedBody: 'Según tu año de nacimiento todavía no puedes usar Picker. No conservamos ningún dato sobre ti; este navegador solo recuerda este aviso.',
       promo: '¿Quieres hacer tus propias preguntas? Descarga la app Picker. Por ahora solo existe para Android.',
       play: 'Disponible en Google Play',
     },
@@ -200,6 +207,7 @@
       title: 'Picker · Enquete',
       consentTitle: 'Você foi convidado/a para uma enquete',
       consentBody: 'Vote aqui mesmo no navegador, sem app e sem conta. Funciona também no iPhone.',
+      consentUpdated: 'Atualizamos os Termos de uso e a Política de privacidade. Confirme-os para continuar votando.',
       birthYear: 'Ano de nascimento',
       birthYearPick: 'Escolher',
       accept: 'Tenho pelo menos {age} anos, aceito os {terms} e li a {privacy}.',
@@ -225,7 +233,7 @@
       missingTitle: 'Enquete não encontrada',
       missingBody: 'Ela foi excluída ou ocultada, ou é privada. Enquetes privadas só abrem no app, para as pessoas a quem foram enviadas.',
       blockedTitle: 'O Picker é a partir de 16 anos',
-      blockedBody: 'Pelo seu ano de nascimento você ainda não pode usar o Picker. Nada foi salvo sobre você.',
+      blockedBody: 'Pelo seu ano de nascimento você ainda não pode usar o Picker. Não guardamos nenhum dado sobre você; este navegador só lembra este aviso.',
       promo: 'Quer fazer suas próprias perguntas? Baixe o app Picker. Por enquanto ele só existe para Android.',
       play: 'Disponível no Google Play',
     },
@@ -332,6 +340,46 @@
     return res;
   }
 
+  // The terms version this guest accepted, from the access token's user_metadata (null: unreadable or none).
+  function acceptedVersion(token) {
+    try {
+      const part = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      const bytes = Uint8Array.from(atob(part + '='.repeat((4 - (part.length % 4)) % 4)), (c) => c.charCodeAt(0));
+      const claims = JSON.parse(new TextDecoder().decode(bytes));
+      return (claims.user_metadata && claims.user_metadata.terms_version) || null;
+    } catch (e) {
+      return null;
+    }
+  }
+  const needsConsent = () => {
+    const accepted = session && acceptedVersion(session.access_token);
+    return !accepted || accepted < TERMS_VERSION;
+  };
+
+  // Records the current terms version in the existing guest access (as acceptTerms does in the app).
+  // 'ok', 'network', or 'gone' when the guest access no longer exists.
+  async function acceptAgain() {
+    const body = { data: { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString() } };
+    let res = await request('/auth/v1/user', { method: 'PUT', body, token: session.access_token });
+    if (res.status === 401 || res.status === 403) {
+      const r = await refresh();
+      if (r !== 'ok') return r;
+      res = await request('/auth/v1/user', { method: 'PUT', body, token: session.access_token });
+    }
+    if (res.network) return 'network';
+    if (!res.ok) { forget(); return 'gone'; }
+    // A fresh token carries the new version, so the next visit does not ask again.
+    const r = await refresh();
+    return r === 'network' ? 'ok' : r;
+  }
+
+  // Under 16 with an existing guest access: delete it, as the app does (best effort; it expires anyway).
+  async function deleteGuest() {
+    if (!session) return;
+    await rpc('delete_guest', {});
+    forget();
+  }
+
   // ---- Turnstile: loaded only when a guest access is about to be created.
   let turnstileLoaded = null;
   function loadTurnstile() {
@@ -376,6 +424,7 @@
       if (part === '{privacy}') return link('/privacy/#' + lang, t.privacy);
       return part;
     }));
+    document.querySelector('#view-consent [data-i18n="consentBody"]').textContent = session ? t.consentUpdated : t.consentBody;
     show('view-consent');
   }
 
@@ -388,6 +437,7 @@
     if (new Date().getFullYear() - birthYear < MINIMUM_AGE) {
       store.set(BLOCKED_KEY, '1');
       show('view-blocked');
+      deleteGuest();
       return;
     }
     if (!$('accept').checked) { setError('consent-error', t.errorAccept); return; }
@@ -395,11 +445,18 @@
     const button = $('consent-submit');
     busy(button, true);
     try {
+      if (session) {
+        // A returning guest accepts the new version in the same guest access.
+        const r = await acceptAgain();
+        if (r === 'network') { setError('consent-error', t.errorNetwork); return; }
+        if (r === 'ok') { await loadPoll(); return; }
+        // 'gone': the guest access was deleted meanwhile; create a new one below.
+      }
       let token;
       try { token = await captchaToken(); } catch (e) { setError('consent-error', t.errorCaptcha); return; }
       const res = await request('/auth/v1/signup', {
         body: {
-          data: { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString() },
+          data: { terms_version: TERMS_VERSION, terms_accepted_at: new Date().toISOString(), client: 'web' },
           gotrue_meta_security: { captcha_token: token },
         },
       });
@@ -536,5 +593,6 @@
 
   // ---- Start
   if (store.get(BLOCKED_KEY)) { show('view-blocked'); return; }
-  if (session && session.access_token && session.refresh_token) { loadPoll(); } else { showConsent(); }
+  if (session && !(session.access_token && session.refresh_token)) forget();
+  if (session && !needsConsent()) { loadPoll(); } else { showConsent(); }
 })();
