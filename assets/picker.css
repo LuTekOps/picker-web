@@ -95,16 +95,17 @@ main {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   font-weight: 800;
-  font-size: 22px;
-  letter-spacing: -0.01em;
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--text);
   text-decoration: none;
   margin-bottom: 28px;
 }
-.brand .mark { width: 30px; height: 30px; }
+.brand .mark { width: 48px; height: 48px; }
 
 /* The Circuit mark: two traces (A mint, B coral) meet in one junction and leave as one arrow. */
 .mark { display: block; overflow: visible; }
