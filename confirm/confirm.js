@@ -139,8 +139,7 @@
   // ---- Language: ?lang=de|en|fr|it|es|pt overrides the browser language (handy for support and tests).
   const query = new URLSearchParams(location.search);
   const fragment = new URLSearchParams(location.hash.replace(/^#/, ''));
-  const requested = (query.get('lang') || navigator.language || 'en').toLowerCase();
-  const lang = Object.keys(STRINGS).find((code) => requested.startsWith(code)) || 'en';
+  const lang = STRINGS[window.pickerLang] ? window.pickerLang : 'en'; // assets/lang.js
   const t = STRINGS[lang];
   document.documentElement.lang = lang;
   document.title = t.title;

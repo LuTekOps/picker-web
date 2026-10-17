@@ -204,8 +204,6 @@ form { margin-top: 24px; display: grid; gap: 16px; }
 .button:hover { filter: brightness(1.08); }
 .button:active { transform: scale(.97); }
 .button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.button.stacked { flex-direction: column; gap: 0; padding: 8px 16px; line-height: 1.3; }
-.button.stacked span + span { font-size: 13px; font-weight: 600; opacity: .8; }
 .button[disabled] { opacity: .7; cursor: progress; }
 @media (prefers-reduced-motion: reduce) { .button { transition: none; } .button:active { transform: none; } }
 .spinner {
@@ -313,6 +311,21 @@ main.legal { max-width: 720px; }
 .legal ul { margin: 0 0 16px; padding-left: 22px; color: var(--text-muted); }
 .legal li { margin: 4px 0; }
 .legal :target { scroll-margin-top: 16px; }
+.lang-switch a[aria-current] { color: var(--text); font-weight: 700; text-decoration: none; }
+
+/* Page language (assets/lang.js sets <html data-lang>). Static translations show English until then;
+   the legal pages show every language without JavaScript and only the chosen one with it. */
+.i18n > [lang] { display: none; }
+html:not([data-lang]) .i18n > [lang="en"],
+html[data-lang="en"] .i18n > [lang="en"], html[data-lang="de"] .i18n > [lang="de"],
+html[data-lang="fr"] .i18n > [lang="fr"], html[data-lang="it"] .i18n > [lang="it"],
+html[data-lang="es"] .i18n > [lang="es"], html[data-lang="pt"] .i18n > [lang="pt"] { display: inline; }
+html[data-lang] .legal article { display: none; }
+html[data-lang="en"] .legal article[lang="en"], html[data-lang="de"] .legal article[lang="de"],
+html[data-lang="fr"] .legal article[lang="fr"], html[data-lang="it"] .legal article[lang="it"],
+html[data-lang="es"] .legal article[lang="es"], html[data-lang="pt"] .legal article[lang="pt"] {
+  display: block; margin-top: 0; padding-top: 0; border-top: 0;
+}
 
 [hidden] { display: none !important; }
 
