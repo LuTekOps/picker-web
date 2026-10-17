@@ -244,9 +244,8 @@
   if (!match) return; // Any other unknown path: the static page stays as it is.
   const pollId = match[1].toLowerCase();
 
-  // ---- Language: ?lang=… overrides the browser language, like on the other pages.
-  const requested = (new URLSearchParams(location.search).get('lang') || navigator.language || 'en').toLowerCase();
-  const lang = Object.keys(STRINGS).find((code) => requested.startsWith(code)) || 'en';
+  // ---- Language: chosen by assets/lang.js (?lang=…, else the browser's languages, else English).
+  const lang = STRINGS[window.pickerLang] ? window.pickerLang : 'en'; // assets/lang.js
   const t = STRINGS[lang];
   const fill = (text, values) => text.replace(/\{(\w+)\}/g, (_, key) => String(values[key]));
   document.documentElement.lang = lang;
@@ -256,7 +255,6 @@
   // ---- The app: Play link with the poll as install referrer, one line in the page's language.
   $('play').href = PLAY_URL + '&referrer=' + encodeURIComponent('poll=' + pollId + '&utm_source=share');
   $('play').replaceChildren(t.play);
-  $('play').classList.remove('stacked');
   $('promo-note').textContent = t.promo;
 
   // ---- Storage: every access can throw (private mode, blocked site data); the page then just forgets.

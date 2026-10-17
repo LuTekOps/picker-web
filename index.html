@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'">
   <meta name="theme-color" content="#0f172a">
   <title>Picker – Smart Decisions</title>
   <meta name="description" content="Many options. One pick. Ask the people you trust and get a clear answer in seconds.">
@@ -21,10 +21,11 @@
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="assets/picker.css">
+  <script src="assets/lang.js"></script>
 </head>
 <body>
-<!-- Landing page, also Supabase's site_url (fallback redirect target). Static, no script: any
-     tokens in the URL fragment are never read or sent anywhere. Play badge follows once the app is live. -->
+<!-- Landing page, also Supabase's site_url (fallback redirect target). Its only script is assets/lang.js
+     (page language), which never reads tokens in the URL fragment or sends anything anywhere. Play badge follows once the app is live. -->
 <main class="hero">
   <div class="brand" aria-hidden="true">
     <svg class="mark" viewBox="0 0 68 68"><defs><linearGradient id="pk-s" gradientUnits="userSpaceOnUse" x1="34.5" y1="40.5" x2="64.5" y2="10.5"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs><g class="glow"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/></g><g class="trace"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="28.5" r="4" fill="none" stroke="#10B981" stroke-width="3"/><circle cx="60.5" cy="54.5" r="4" fill="none" stroke="#F43F5E" stroke-width="3"/><circle cx="34.5" cy="40.5" r="3.2" fill="#FFFFFF"/></g></svg>
@@ -33,16 +34,15 @@
 
   <p class="tagline">Smart Decisions</p>
   <h1>Many options. One pick.</h1>
-  <p class="motto">Ask the people you trust and get a clear answer in seconds.</p>
-  <div class="card demo" aria-label="Example poll: Pizza 62 percent, Sushi 38 percent">
-    <p class="demo-question">Pizza or sushi tonight?</p>
+  <p class="motto"><span class="i18n"><span lang="en">Ask the people you trust and get a clear answer in seconds.</span><span lang="de">Frag die Leute, denen du vertraust, und hab in Sekunden eine klare Antwort.</span><span lang="fr">Demande aux personnes en qui tu as confiance et obtiens une réponse claire en quelques secondes.</span><span lang="it">Chiedi alle persone di cui ti fidi e ottieni una risposta chiara in pochi secondi.</span><span lang="es">Pregunta a la gente en quien confías y obtén una respuesta clara en segundos.</span><span lang="pt">Pergunte às pessoas em quem você confia e tenha uma resposta clara em segundos.</span></span></p>
+  <div class="card demo" aria-label="Pizza 62%, Sushi 38%">
+    <p class="demo-question"><span class="i18n"><span lang="en">Pizza or sushi tonight?</span><span lang="de">Pizza oder Sushi heute Abend?</span><span lang="fr">Pizza ou sushi ce soir?</span><span lang="it">Pizza o sushi stasera?</span><span lang="es">¿Pizza o sushi esta noche?</span><span lang="pt">Pizza ou sushi hoje à noite?</span></span></p>
     <div class="option"><span class="badge badge-a">A</span><span class="option-label">Pizza</span><span class="pct">62%</span></div>
     <div class="option"><span class="badge badge-b">B</span><span class="option-label">Sushi</span><span class="pct">38%</span></div>
     <div class="tug" aria-hidden="true"><span class="tug-a"></span><span class="tug-b"></span></div>
   </div>
-  <p lang="de">Frag die Leute, denen du vertraust, und hab in Sekunden eine klare Antwort. Picker gibt es bald für Android. Hast du die App schon, öffne sie auf deinem Handy, um weiterzumachen.</p>
-  <p>Picker is coming soon to Android. Already have the app? Open it on your phone to continue.</p>
-  <p class="footer"><a href="privacy/#de-verantwortlicher">Impressum · Legal notice</a> · <a href="privacy/">Datenschutzerklärung · Privacy Policy</a> · <a href="terms/">Nutzungsbedingungen · Terms of Use</a></p>
+  <p><span class="i18n"><span lang="en">Picker is coming soon to Android. Already have the app? Open it on your phone to continue.</span><span lang="de">Picker gibt es bald für Android. Hast du die App schon? Öffne sie auf deinem Handy, um weiterzumachen.</span><span lang="fr">Picker arrive bientôt sur Android. Tu as déjà l'app? Ouvre-la sur ton téléphone pour continuer.</span><span lang="it">Picker arriva presto su Android. Hai già l'app? Aprila sul telefono per continuare.</span><span lang="es">Picker llega pronto a Android. ¿Ya tienes la app? Ábrela en tu móvil para continuar.</span><span lang="pt">O Picker chega em breve ao Android. Já tem o app? Abra no seu celular para continuar.</span></span></p>
+  <p class="footer"><span class="i18n"><a lang="en" href="privacy/#en-controller">Legal notice</a><a lang="de" href="privacy/#de-verantwortlicher">Impressum</a><a lang="fr" href="privacy/#fr-responsable">Mentions légales</a><a lang="it" href="privacy/#it-titolare">Note legali</a><a lang="es" href="privacy/#es-responsable">Aviso legal</a><a lang="pt" href="privacy/#pt-controlador">Informações legais</a></span> · <span class="i18n"><a lang="en" href="privacy/#en">Privacy Policy</a><a lang="de" href="privacy/#de">Datenschutzerklärung</a><a lang="fr" href="privacy/#fr">Politique de confidentialité</a><a lang="it" href="privacy/#it">Informativa sulla privacy</a><a lang="es" href="privacy/#es">Política de privacidad</a><a lang="pt" href="privacy/#pt">Política de privacidade</a></span> · <span class="i18n"><a lang="en" href="terms/#en">Terms of Use</a><a lang="de" href="terms/#de">Nutzungsbedingungen</a><a lang="fr" href="terms/#fr">Conditions d'utilisation</a><a lang="it" href="terms/#it">Condizioni d'uso</a><a lang="es" href="terms/#es">Condiciones de uso</a><a lang="pt" href="terms/#pt">Termos de uso</a></span></p>
 </main>
 </body>
 </html>

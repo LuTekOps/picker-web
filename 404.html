@@ -22,6 +22,7 @@
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/picker.css">
+  <script src="/assets/lang.js"></script>
   <script src="/assets/poll.js" defer></script>
 </head>
 <body>
@@ -38,9 +39,8 @@
 
   <!-- Static fallback (no JavaScript or no poll id) -->
   <section id="view-intro">
-    <h1>Open in Picker</h1>
-    <p lang="de">Dieser Link öffnet eine Umfrage in der Picker-App. Installiere Picker gratis, die Umfrage öffnet sich danach von selbst.</p>
-    <p lang="en">This link opens a poll in the Picker app. Install Picker for free and the poll opens right after.</p>
+    <h1><span class="i18n"><span lang="en">Open in Picker</span><span lang="de">In Picker öffnen</span><span lang="fr">Ouvrir dans Picker</span><span lang="it">Apri in Picker</span><span lang="es">Abrir en Picker</span><span lang="pt">Abrir no Picker</span></span></h1>
+    <p><span class="i18n"><span lang="en">This link opens a poll in the Picker app. Install Picker for free and the poll opens right after.</span><span lang="de">Dieser Link öffnet eine Umfrage in der Picker-App. Installiere Picker gratis, die Umfrage öffnet sich danach von selbst.</span><span lang="fr">Ce lien ouvre un sondage dans l'app Picker. Installe Picker gratuitement, le sondage s'ouvre ensuite tout seul.</span><span lang="it">Questo link apre un sondaggio nell'app Picker. Installa Picker gratis e il sondaggio si apre subito dopo.</span><span lang="es">Este enlace abre una encuesta en la app Picker. Instala Picker gratis y la encuesta se abre justo después.</span><span lang="pt">Este link abre uma enquete no app Picker. Instale o Picker de graça e a enquete abre logo em seguida.</span></span></p>
   </section>
 
   <!-- 1. Age and terms, before a guest access is created -->
@@ -86,11 +86,11 @@
 
   <!-- Always: the app -->
   <section class="promo">
-    <p><a class="button stacked" id="play" href="https://play.google.com/store/apps/details?id=ch.lutekops.picker&amp;referrer=utm_source%3Dshare"><span lang="de">Bei Google Play laden</span><span lang="en">Get it on Google Play</span></a></p>
-    <p class="note" id="promo-note"><span lang="de">Picker gibt es als App vorerst nur für Android. Schon installiert? Tippe den Link nochmals an.</span><br><span lang="en">The Picker app is Android-only for now. Already installed? Tap the link again.</span></p>
+    <p><a class="button" id="play" href="https://play.google.com/store/apps/details?id=ch.lutekops.picker&amp;referrer=utm_source%3Dshare"><span class="i18n"><span lang="en">Get it on Google Play</span><span lang="de">Bei Google Play laden</span><span lang="fr">Disponible sur Google Play</span><span lang="it">Disponibile su Google Play</span><span lang="es">Disponible en Google Play</span><span lang="pt">Disponível no Google Play</span></span></a></p>
+    <p class="note" id="promo-note"><span class="i18n"><span lang="en">The Picker app is Android-only for now. Already installed? Tap the link again.</span><span lang="de">Picker gibt es als App vorerst nur für Android. Schon installiert? Tippe den Link nochmals an.</span><span lang="fr">Pour l'instant, l'app Picker existe seulement sur Android. Déjà installée? Touche à nouveau le lien.</span><span lang="it">Per ora l'app Picker esiste solo per Android. Già installata? Tocca di nuovo il link.</span><span lang="es">Por ahora la app Picker solo existe para Android. ¿Ya la tienes instalada? Toca el enlace otra vez.</span><span lang="pt">Por enquanto o app Picker só existe para Android. Já instalou? Toque no link de novo.</span></span></p>
   </section>
 
-  <p class="footer"><a href="/privacy/">Datenschutzerklärung · Privacy Policy</a> · <a href="/terms/">Nutzungsbedingungen · Terms of Use</a></p>
+  <p class="footer"><span class="i18n"><a lang="en" href="/privacy/#en">Privacy Policy</a><a lang="de" href="/privacy/#de">Datenschutzerklärung</a><a lang="fr" href="/privacy/#fr">Politique de confidentialité</a><a lang="it" href="/privacy/#it">Informativa sulla privacy</a><a lang="es" href="/privacy/#es">Política de privacidad</a><a lang="pt" href="/privacy/#pt">Política de privacidade</a></span> · <span class="i18n"><a lang="en" href="/terms/#en">Terms of Use</a><a lang="de" href="/terms/#de">Nutzungsbedingungen</a><a lang="fr" href="/terms/#fr">Conditions d'utilisation</a><a lang="it" href="/terms/#it">Condizioni d'uso</a><a lang="es" href="/terms/#es">Condiciones de uso</a><a lang="pt" href="/terms/#pt">Termos de uso</a></span></p>
 </main>
 </body>
 </html>
