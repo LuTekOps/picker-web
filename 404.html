@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' blob:; connect-src https://glebczptvyoojznohtsc.supabase.co; base-uri 'none'; form-action 'none'">
   <meta name="theme-color" content="#0f172a">
   <title>Picker – Smart Decisions</title>
   <meta name="description" content="Many options. One pick. Ask the people you trust and get a clear answer in seconds.">
@@ -22,20 +22,74 @@
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/picker.css">
+  <script src="/assets/poll.js" defer></script>
 </head>
 <body>
-<!-- Fallback for share links (https://picker.lutekops.ch/p/{pollId}) opened without the app:
-     with the app installed, Android opens them in Picker directly (App Links, see
-     /.well-known/assetlinks.json). Static, no script. -->
+<!-- Share links (https://picker.lutekops.ch/p/{pollId}) opened without the app. With the app installed,
+     Android opens them in Picker directly (App Links, see /.well-known/assetlinks.json). Here, poll.js lets
+     people vote in the browser (iPhone, desktop) as a guest, and the Play button passes the poll id on as
+     install referrer, so the app opens the poll on its first start (PlayInstallReferrer.kt).
+     Without JavaScript only the static text below shows. -->
 <main>
   <div class="brand" aria-hidden="true">
     <svg class="mark" viewBox="0 0 68 68"><defs><linearGradient id="pk-s" gradientUnits="userSpaceOnUse" x1="34.5" y1="40.5" x2="64.5" y2="10.5"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs><g class="glow"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/></g><g class="trace"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="28.5" r="4" fill="none" stroke="#10B981" stroke-width="3"/><circle cx="60.5" cy="54.5" r="4" fill="none" stroke="#F43F5E" stroke-width="3"/><circle cx="34.5" cy="40.5" r="3.2" fill="#FFFFFF"/></g></svg>
     Picker
   </div>
 
-  <h1>Open in Picker</h1>
-  <p lang="de">Dieser Link öffnet eine Umfrage in der Picker-App. Installiere Picker auf deinem Android-Handy und tippe den Link nochmals an.</p>
-  <p lang="en">This link opens a poll in the Picker app. Install Picker on your Android phone and tap the link again.</p>
+  <!-- Static fallback (no JavaScript or no poll id) -->
+  <section id="view-intro">
+    <h1>Open in Picker</h1>
+    <p lang="de">Dieser Link öffnet eine Umfrage in der Picker-App. Installiere Picker gratis, die Umfrage öffnet sich danach von selbst.</p>
+    <p lang="en">This link opens a poll in the Picker app. Install Picker for free and the poll opens right after.</p>
+  </section>
+
+  <!-- 1. Age and terms, before a guest access is created -->
+  <section id="view-consent" hidden>
+    <h1 data-i18n="consentTitle">You're invited to a poll</h1>
+    <p data-i18n="consentBody">Vote right here in your browser, no app and no account needed. Works on iPhone too.</p>
+    <form id="consent-form" novalidate>
+      <div class="field">
+        <label for="birth-year" data-i18n="birthYear">Year of birth</label>
+        <select id="birth-year" required><option value="" data-i18n="birthYearPick">Choose</option></select>
+      </div>
+      <label class="check-row"><input type="checkbox" id="accept" required> <span id="accept-text"></span></label>
+      <div class="alert" id="consent-error" role="alert" hidden></div>
+      <div id="captcha"></div>
+      <button class="button" id="consent-submit" type="submit"><span class="spinner" hidden></span><span data-i18n="continue">Continue to the poll</span></button>
+    </form>
+  </section>
+
+  <!-- 2. The poll: vote, then results -->
+  <section id="view-poll" hidden>
+    <p class="note" id="poll-meta"></p>
+    <h1 id="poll-title"></h1>
+    <form id="vote-form" novalidate>
+      <div class="choices" id="choices"></div>
+      <div class="alert" id="vote-error" role="alert" hidden></div>
+      <button class="button" id="vote-submit" type="submit" disabled><span class="spinner" hidden></span><span data-i18n="vote">Vote</span></button>
+    </form>
+    <div class="results" id="results" hidden></div>
+    <p class="note" id="poll-status"></p>
+  </section>
+
+  <!-- 3. Deleted, hidden or private -->
+  <section id="view-missing" hidden>
+    <h1 data-i18n="missingTitle">Poll not found</h1>
+    <p data-i18n="missingBody">It was deleted or hidden, or it is private. Private polls only open in the app for the people they were sent to.</p>
+  </section>
+
+  <!-- 4. Under the minimum age -->
+  <section id="view-blocked" hidden>
+    <h1 data-i18n="blockedTitle">Picker is for ages 16 and up</h1>
+    <p data-i18n="blockedBody">Based on your year of birth you can't use Picker yet. Nothing was saved about you.</p>
+  </section>
+
+  <!-- Always: the app -->
+  <section class="promo">
+    <p><a class="button stacked" id="play" href="https://play.google.com/store/apps/details?id=ch.lutekops.picker&amp;referrer=utm_source%3Dshare"><span lang="de">Bei Google Play laden</span><span lang="en">Get it on Google Play</span></a></p>
+    <p class="note" id="promo-note"><span lang="de">Picker gibt es als App vorerst nur für Android. Schon installiert? Tippe den Link nochmals an.</span><br><span lang="en">The Picker app is Android-only for now. Already installed? Tap the link again.</span></p>
+  </section>
+
   <p class="footer"><a href="/privacy/">Datenschutzerklärung · Privacy Policy</a> · <a href="/terms/">Nutzungsbedingungen · Terms of Use</a></p>
 </main>
 </body>
