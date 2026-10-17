@@ -204,6 +204,8 @@ form { margin-top: 24px; display: grid; gap: 16px; }
 .button:hover { filter: brightness(1.08); }
 .button:active { transform: scale(.97); }
 .button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.button.stacked { flex-direction: column; gap: 0; padding: 8px 16px; line-height: 1.3; }
+.button.stacked span + span { font-size: 13px; font-weight: 600; opacity: .8; }
 .button[disabled] { opacity: .7; cursor: progress; }
 @media (prefers-reduced-motion: reduce) { .button { transition: none; } .button:active { transform: none; } }
 .spinner {
@@ -230,6 +232,7 @@ form { margin-top: 24px; display: grid; gap: 16px; }
 }
 .steps li { margin: 4px 0; }
 
+.note { font-size: 14px; color: var(--text-muted); }
 .footer { margin-top: 40px; font-size: 13px; color: var(--text-muted); }
 .footer a, .legal a { color: var(--primary); }
 
