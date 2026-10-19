@@ -333,3 +333,61 @@ html[data-lang="es"] .legal article[lang="es"], html[data-lang="pt"] .legal arti
 /* Headings focused by script (screen readers announce the new view) need no focus ring. */
 h1[tabindex="-1"]:focus { outline: none; }
 .legal a.brand { color: var(--text); text-decoration: none; }
+
+/* Tester sign-up (testen/): a full-width page with top bar, hero, steps, two info cards and the form. */
+body.tp main { max-width: none; margin: 0; padding: 0; }
+.tp-wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.tp-nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--outline); }
+.tp-nav-row { display: flex; align-items: center; justify-content: space-between; min-height: 68px; }
+.tp-nav .brand { margin: 0; font-size: 26px; gap: 10px; }
+.tp-nav .brand .mark { width: 34px; height: 34px; }
+.tp-nav-cta { color: var(--primary); font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; text-decoration: none; padding: 8px 14px; border: 2px solid var(--primary); border-radius: 10px; }
+.tp-hero { min-height: calc(100vh - 69px); min-height: calc(100dvh - 69px); display: grid; align-items: center; padding: 48px 0;
+  background: radial-gradient(ellipse 45% 40% at 80% 35%, color-mix(in srgb, var(--mint-500) 14%, transparent), transparent 70%),
+              radial-gradient(ellipse 40% 35% at 70% 65%, color-mix(in srgb, var(--coral-500) 10%, transparent), transparent 70%); }
+.tp-hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center; }
+.tp-hero h1 { font-size: clamp(38px, 6vw, 64px); margin-bottom: 16px; text-wrap: balance; }
+.tp-hero .motto { font-size: clamp(18px, 2vw, 21px); max-width: 34em; }
+.tp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 16px; }
+.tp-actions .button { width: auto; padding: 0 28px; }
+.button-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.tp-facts { display: grid; gap: 14px; }
+.tp-fact { background: var(--surface); border: 1px solid var(--outline); border-radius: 16px; padding: 18px 22px; display: flex; align-items: baseline; gap: 14px; }
+.tp-fact b { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: var(--primary); font-variant-numeric: tabular-nums; min-width: 1.6em; }
+.tp-fact:nth-child(2) b { color: var(--secondary); }
+.tp-fact span { color: var(--text); font-weight: 600; }
+.tp-section { padding: 72px 0; }
+.tp-alt { background: color-mix(in srgb, var(--surface) 55%, var(--bg)); border-block: 1px solid var(--outline); }
+.tp-section h2 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: clamp(28px, 4vw, 38px); letter-spacing: -0.02em; margin: 0 0 32px; }
+.tp-section h3 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 19px; margin: 0 0 8px; }
+.tp-steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px 24px; }
+@media (max-width: 960px) { .tp-steps { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+.tp-steps li { counter-increment: step; display: grid; align-content: start; gap: 6px; color: var(--text-muted); }
+.tp-steps li::before { content: counter(step); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 8px;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 17px; background: var(--mint-500); color: var(--ink); }
+.tp-steps li:last-child::before { background: var(--coral-500); }
+.tp-steps strong { color: var(--text); font-size: 17px; }
+.tp-link { color: var(--primary); font-weight: 600; text-decoration: none; margin-top: 4px; }
+.tp-link:hover { text-decoration: underline; }
+.tp-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.tp-cards .card p:last-child { margin-bottom: 0; }
+.tp-cards ul { margin: 0 0 14px; padding-left: 20px; color: var(--text); }
+.tp-cards li { margin: 6px 0; }
+.tp-form-wrap { max-width: 600px; }
+.tp-form-wrap form { margin-top: 0; }
+.tp .field input { padding-right: 16px; }
+.field .optional { font-weight: 400; color: var(--text-muted); }
+.done { border-color: var(--primary); }
+.done h2 { margin: 0 0 8px; font-size: 26px; }
+.done h2:focus { outline: none; }
+.tp-footer { padding: 28px 0 40px; border-top: 1px solid var(--outline); font-size: 14px; color: var(--text-muted); }
+.tp-footer a { color: var(--primary); }
+#anmelden, #ablauf { scroll-margin-top: 72px; }
+@media (max-width: 760px) {
+  .tp-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .tp-hero { min-height: 0; padding: 40px 0 56px; }
+  .tp-wrap { padding: 0 16px; }
+  .tp-section { padding: 52px 0; }
+  .tp-cards { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }

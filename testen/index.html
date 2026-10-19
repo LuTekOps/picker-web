@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self'; connect-src https://glebczptvyoojznohtsc.supabase.co; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#0f172a">
+  <title>Picker · Tester werden</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/picker.css">
+  <script src="testen.js" defer></script>
+</head>
+<body class="tp">
+<!-- Sign-up page for the closed test on Google Play (picker.lutekops.ch/testen/), German only.
+     testen.js sends the form to the edge function tester-signup (Turnstile check, stored in tester_signups,
+     email to the developer). -->
+<header class="tp-nav">
+  <div class="tp-wrap tp-nav-row">
+    <a class="brand" href="../" aria-label="Picker">
+      <svg class="mark" viewBox="0 0 68 68"><defs><linearGradient id="pk-s" gradientUnits="userSpaceOnUse" x1="34.5" y1="40.5" x2="64.5" y2="10.5"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs><g class="glow"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/></g><g class="trace"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="28.5" r="4" fill="none" stroke="#10B981" stroke-width="3"/><circle cx="60.5" cy="54.5" r="4" fill="none" stroke="#F43F5E" stroke-width="3"/><circle cx="34.5" cy="40.5" r="3.2" fill="#FFFFFF"/></g></svg>
+      Picker
+    </a>
+    <a class="tp-nav-cta" href="#anmelden">Anmelden</a>
+  </div>
+</header>
+
+<main>
+  <section class="tp-hero">
+    <div class="tp-wrap tp-hero-grid">
+      <div>
+        <p class="tagline">Geschlossener Test</p>
+        <h1>Werde Picker-Tester</h1>
+        <p class="motto">Picker kommt bald in den Google Play Store. Vorher will Google sehen, dass echte Leute die App testen. Wir suchen 15 Tester. Machst du mit?</p>
+        <div class="tp-actions">
+          <a class="button" href="#anmelden">Jetzt anmelden</a>
+          <a class="button button-secondary" href="#ablauf">So geht's</a>
+        </div>
+        <p class="note">Du brauchst ein Android-Handy mit Google Play.</p>
+      </div>
+      <div class="tp-facts" aria-label="Eckdaten">
+        <div class="tp-fact"><b>15</b><span>Tester gesucht</span></div>
+        <div class="tp-fact"><b>14</b><span>Tage dabeibleiben</span></div>
+        <div class="tp-fact"><b>2</b><span>Minuten zum Anmelden</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tp-section" id="ablauf">
+    <div class="tp-wrap">
+      <h2>So geht's</h2>
+      <ol class="tp-steps">
+        <li><strong>Anmelden</strong><span>Füll unten das Formular aus. Nimm die Google-Adresse, mit der du bei Google Play angemeldet bist.</span></li>
+        <li><strong>Freischaltung abwarten</strong><span>Luca trägt dich bei Google Play als Tester ein und meldet sich per WhatsApp oder Mail.</span></li>
+        <li><strong>Dem Test beitreten</strong><span>Öffne den Test-Link mit derselben Google-Adresse, tippe auf «Tester werden» und installiere Picker über Google Play.</span>
+          <a class="tp-link" href="https://play.google.com/apps/testing/ch.lutekops.picker" target="_blank" rel="noopener">Test bei Google Play öffnen →</a></li>
+        <li><strong>App behalten</strong><span>Sobald 15 Tester dabei sind, gibt Luca das Go für die 14 Tage. Bis dahin lässt du Picker einfach auf dem Handy. Die App braucht wenig Akku und Daten und wurde mit viel Wert auf Sicherheit gebaut.</span></li>
+        <li><strong>14 Tage testen</strong><span>Nach dem Go: Picker installiert lassen, ab und zu öffnen und Feedback geben, in der App unter Einstellungen → Feedback oder direkt an Luca.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="tp-section tp-alt">
+    <div class="tp-wrap tp-cards">
+      <div class="card">
+        <h3>Werbung: nur Testanzeigen antippen</h3>
+        <p>Picker zeigt ein paar Anzeigen. Tippe eine Anzeige nur an, wenn oben «Test Ad» steht. Klicks von Testern auf echte Anzeigen können das Werbekonto sperren lassen. Anschauen ist kein Problem.</p>
+      </div>
+      <div class="card">
+        <h3>Deine Werbe-ID finden</h3>
+        <p>Damit bekommt dein Handy nur Testanzeigen. Sie ist freiwillig, hilft aber sehr.</p>
+        <ul>
+          <li>Samsung und die meisten Handys: Einstellungen → Google → Alle Dienste → Werbung</li>
+          <li>Pixel und ab Android 12: Einstellungen → Sicherheit &amp; Datenschutz → Weitere Datenschutzeinstellungen → Werbung</li>
+        </ul>
+        <p>Kopiere «Deine Werbe-ID» und füge sie im Formular ein.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tp-section" id="anmelden">
+    <div class="tp-wrap tp-form-wrap">
+      <div id="view-form">
+        <h2>Anmelden</h2>
+        <form id="signup-form" class="card" novalidate>
+          <div class="field" id="field-name">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required>
+          </div>
+          <div class="field" id="field-email">
+            <label for="email">Google-Adresse (Gmail)</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="320" inputmode="email" required>
+            <p class="hint">Die Adresse, die du bei Google Play nutzt.</p>
+          </div>
+          <div class="field" id="field-adid">
+            <label for="adid">Werbe-ID <span class="optional">(freiwillig)</span></label>
+            <input id="adid" name="adid" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="36" placeholder="38400000-8cf0-11bd-b23e-10b96e40000d">
+          </div>
+          <div class="field" id="field-phone">
+            <label for="phone">Handynummer <span class="optional">(freiwillig)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="32" placeholder="+41 79 123 45 67">
+            <p class="hint">Damit Luca dir per WhatsApp Bescheid geben kann.</p>
+          </div>
+          <div class="alert" id="signup-error" role="alert" hidden></div>
+          <div id="captcha"></div>
+          <button class="button" id="signup-submit" type="submit"><span class="spinner" hidden></span><span>Als Tester anmelden</span></button>
+        </form>
+      </div>
+      <div id="view-done" class="card done" hidden>
+        <h2 tabindex="-1" id="done-title">Danke, du bist angemeldet!</h2>
+        <p>Luca schaltet dich frei und meldet sich. Danach geht's mit Schritt 3 weiter.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="tp-footer">
+  <div class="tp-wrap"><a href="../impressum/#de">Impressum</a> · <a href="../privacy/#de">Datenschutzerklärung</a></div>
+</footer>
+</body>
+</html>
