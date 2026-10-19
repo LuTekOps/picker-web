@@ -12,91 +12,113 @@
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../assets/picker.css">
-  <script src="../assets/lang.js"></script>
   <script src="testen.js" defer></script>
 </head>
-<body>
-<!-- Sign-up page for the closed test on Google Play (picker.lutekops.ch/testen/): how to take part, plus a form.
+<body class="tp">
+<!-- Sign-up page for the closed test on Google Play (picker.lutekops.ch/testen/), German only.
      testen.js sends the form to the edge function tester-signup (Turnstile check, stored in tester_signups,
-     email to the developer). Without JavaScript only the English text below shows and the form does nothing. -->
-<main class="tester">
-  <a class="brand" href="../" aria-label="Picker">
-    <svg class="mark" viewBox="0 0 68 68"><defs><linearGradient id="pk-s" gradientUnits="userSpaceOnUse" x1="34.5" y1="40.5" x2="64.5" y2="10.5"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs><g class="glow"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/></g><g class="trace"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="28.5" r="4" fill="none" stroke="#10B981" stroke-width="3"/><circle cx="60.5" cy="54.5" r="4" fill="none" stroke="#F43F5E" stroke-width="3"/><circle cx="34.5" cy="40.5" r="3.2" fill="#FFFFFF"/></g></svg>
-    Picker
-  </a>
-
-  <p class="tagline" data-i18n="eyebrow">Closed test</p>
-  <h1 data-i18n="title">Become a Picker tester</h1>
-  <p class="motto" data-i18n="intro">Picker is about to launch on Google Play. Before that, Google wants testers who keep the app for 14 days in a row. We are looking for 15 people. Will you help?</p>
-  <p class="note" data-i18n="androidOnly">You need an Android phone with Google Play. iPhone doesn't work for this test.</p>
-
-  <h2 data-i18n="howTitle">How it works</h2>
-  <ol class="tester-steps">
-    <li><strong data-i18n="s1t">Sign up</strong><span data-i18n="s1b">Fill in the form below. Use the Google address you are signed in with on Google Play.</span></li>
-    <li><strong data-i18n="s2t">Wait to be added</strong><span data-i18n="s2b">Luca adds you to the test on Google Play and lets you know by WhatsApp or email.</span></li>
-    <li><strong data-i18n="s3t">Join the test</strong><span data-i18n="s3b">Open the link below with that same Google address, tap “Become a tester”, then “Download it on Google Play” and install Picker.</span>
-      <a class="button button-secondary" id="optin" href="https://play.google.com/apps/testing/ch.lutekops.picker" target="_blank" rel="noopener" data-i18n="optin">Open the test on Google Play</a>
-      <span class="note" data-i18n="optinNote">The link only works once you have been added.</span></li>
-    <li><strong data-i18n="s4t">Keep it, then 14 days</strong><span data-i18n="s4b">As soon as 15 testers are in, Luca gives the go for the 14 days. Until then, just keep Picker on your phone: it is light on battery and data, and it was built with security in mind.</span><span data-i18n="s4c">After the go: leave Picker installed for 14 days, open it now and then and don't leave the test.</span></li>
-    <li><strong data-i18n="s5t">Tell us what you think</strong><span data-i18n="s5b">Bugs, ideas, praise: in the app under Settings → Feedback, or just send Luca a message.</span></li>
-  </ol>
-
-  <div class="card callout">
-    <h3 data-i18n="adsTitle">Ads: only tap test ads</h3>
-    <p data-i18n="adsBody">Picker shows a few ads. As a tester, only tap an ad if it says “Test Ad” at the top. Clicks on real ads by testers can get the developer's ad account banned. Seeing them is fine.</p>
+     email to the developer). -->
+<header class="tp-nav">
+  <div class="tp-wrap tp-nav-row">
+    <a class="brand" href="../" aria-label="Picker">
+      <svg class="mark" viewBox="0 0 68 68"><defs><linearGradient id="pk-s" gradientUnits="userSpaceOnUse" x1="34.5" y1="40.5" x2="64.5" y2="10.5"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#F43F5E"/></linearGradient></defs><g class="glow"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="12" stroke-opacity="0.07" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="8" stroke-opacity="0.12" stroke-linecap="round" stroke-linejoin="round"/></g><g class="trace"><path d="M10.5 28.5 L22.5 28.5 L34.5 40.5" stroke="#10B981" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M56.5 54.5 L44.5 54.5 L34.5 44.5 L34.5 40.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 40.5 L64.5 10.5" stroke="url(#pk-s)" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M46.5 10.5 L64.5 10.5 L64.5 28.5" stroke="#F43F5E" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="28.5" r="4" fill="none" stroke="#10B981" stroke-width="3"/><circle cx="60.5" cy="54.5" r="4" fill="none" stroke="#F43F5E" stroke-width="3"/><circle cx="34.5" cy="40.5" r="3.2" fill="#FFFFFF"/></g></svg>
+      Picker
+    </a>
+    <a class="tp-nav-cta" href="#anmelden">Anmelden</a>
   </div>
+</header>
 
-  <div class="card callout">
-    <h3 data-i18n="adidTitle">Find your advertising ID</h3>
-    <p data-i18n="adidBody">With it, your phone only gets test ads. It is optional, but it helps a lot.</p>
-    <ul>
-      <li data-i18n="adidPath1">Most phones (Samsung and others): Settings → Google → All services → Ads</li>
-      <li data-i18n="adidPath2">Pixel and Android 12 or later: Settings → Security &amp; privacy → More privacy settings → Ads</li>
-    </ul>
-    <p data-i18n="adidNote">Copy “Your advertising ID” and paste it below. If it only shows zeros, the ID was deleted: tap “Get new advertising ID” or leave the field empty.</p>
-  </div>
-
-  <section id="view-form">
-    <h2 data-i18n="formTitle">Sign up</h2>
-    <form id="signup-form" novalidate>
-      <div class="field" id="field-name">
-        <label for="name" data-i18n="name">Name</label>
-        <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required>
+<main>
+  <section class="tp-hero">
+    <div class="tp-wrap tp-hero-grid">
+      <div>
+        <p class="tagline">Geschlossener Test</p>
+        <h1>Werde Picker-Tester</h1>
+        <p class="motto">Picker kommt bald in den Google Play Store. Vorher will Google sehen, dass echte Leute die App testen. Wir suchen 15 Tester. Machst du mit?</p>
+        <div class="tp-actions">
+          <a class="button" href="#anmelden">Jetzt anmelden</a>
+          <a class="button button-secondary" href="#ablauf">So geht's</a>
+        </div>
+        <p class="note">Du brauchst ein Android-Handy mit Google Play.</p>
       </div>
-      <div class="field" id="field-email">
-        <label for="email" data-i18n="email">Google address (Gmail)</label>
-        <input id="email" name="email" type="email" autocomplete="email" maxlength="320" inputmode="email" required>
-        <p class="hint" data-i18n="emailHint">The address you use on Google Play.</p>
+      <div class="tp-facts" aria-label="Eckdaten">
+        <div class="tp-fact"><b>15</b><span>Tester gesucht</span></div>
+        <div class="tp-fact"><b>14</b><span>Tage dabeibleiben</span></div>
+        <div class="tp-fact"><b>2</b><span>Minuten zum Anmelden</span></div>
       </div>
-      <div class="field" id="field-adid">
-        <label for="adid" data-i18n="adid">Advertising ID (optional)</label>
-        <input id="adid" name="adid" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="36" placeholder="38400000-8cf0-11bd-b23e-10b96e40000d">
-        <p class="hint" data-i18n="adidHint">See “Find your advertising ID” above.</p>
-      </div>
-      <div class="field" id="field-phone">
-        <label for="phone" data-i18n="phone">Mobile number (optional)</label>
-        <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="32" placeholder="+41 79 123 45 67">
-        <p class="hint" data-i18n="phoneHint">So Luca can tell you by WhatsApp when you have been added.</p>
-      </div>
-      <label class="check-row"><input type="checkbox" id="age" required> <span data-i18n="age">I am at least 16 years old.</span></label>
-      <label class="check-row"><input type="checkbox" id="consent" required> <span data-i18n="consent">I agree that my details are stored for this test, as described below.</span></label>
-      <div class="alert" id="signup-error" role="alert" hidden></div>
-      <div id="captcha"></div>
-      <button class="button" id="signup-submit" type="submit"><span class="spinner" hidden></span><span data-i18n="submit">Sign up as a tester</span></button>
-    </form>
-  </section>
-
-  <section id="view-done" hidden>
-    <div class="card done">
-      <h2 tabindex="-1" id="done-title" data-i18n="doneTitle">Thanks, you're signed up!</h2>
-      <p data-i18n="doneBody">Luca adds you to the test and lets you know. Then carry on with step 3.</p>
     </div>
   </section>
 
-  <h2 data-i18n="privacyTitle">What happens with your details</h2>
-  <p class="note" data-i18n="privacyBody">Luca Parise (LuTekOps), the developer of Picker, uses your name, Google address, advertising ID and mobile number only for this test: to add you as a tester on Google Play and as a test device in Google AdMob, and to reach you by WhatsApp or email. They are stored with Supabase (EU) and sent to Luca by email via Resend (USA). They are deleted 6 months after you sign up at the latest, or right away if you ask: picker-smartdecisions@lutekops.ch.</p>
+  <section class="tp-section" id="ablauf">
+    <div class="tp-wrap">
+      <h2>So geht's</h2>
+      <ol class="tp-steps">
+        <li><strong>Anmelden</strong><span>Füll unten das Formular aus. Nimm die Google-Adresse, mit der du bei Google Play angemeldet bist.</span></li>
+        <li><strong>Freischaltung abwarten</strong><span>Luca trägt dich bei Google Play als Tester ein und meldet sich per WhatsApp oder Mail.</span></li>
+        <li><strong>Dem Test beitreten</strong><span>Öffne den Test-Link mit derselben Google-Adresse, tippe auf «Tester werden» und installiere Picker über Google Play.</span>
+          <a class="tp-link" href="https://play.google.com/apps/testing/ch.lutekops.picker" target="_blank" rel="noopener">Test bei Google Play öffnen →</a></li>
+        <li><strong>App behalten</strong><span>Sobald 15 Tester dabei sind, gibt Luca das Go für die 14 Tage. Bis dahin lässt du Picker einfach auf dem Handy. Die App braucht wenig Akku und Daten und wurde mit viel Wert auf Sicherheit gebaut.</span></li>
+        <li><strong>14 Tage testen</strong><span>Nach dem Go: Picker installiert lassen, ab und zu öffnen und Feedback geben, in der App unter Einstellungen → Feedback oder direkt an Luca.</span></li>
+      </ol>
+    </div>
+  </section>
 
-  <p class="footer"><a href="../impressum/" data-i18n="imprint">Legal notice</a> · <a href="../privacy/" data-i18n="privacy">Privacy Policy</a></p>
+  <section class="tp-section tp-alt">
+    <div class="tp-wrap tp-cards">
+      <div class="card">
+        <h3>Werbung: nur Testanzeigen antippen</h3>
+        <p>Picker zeigt ein paar Anzeigen. Tippe eine Anzeige nur an, wenn oben «Test Ad» steht. Klicks von Testern auf echte Anzeigen können das Werbekonto sperren lassen. Anschauen ist kein Problem.</p>
+      </div>
+      <div class="card">
+        <h3>Deine Werbe-ID finden</h3>
+        <p>Damit bekommt dein Handy nur Testanzeigen. Sie ist freiwillig, hilft aber sehr.</p>
+        <ul>
+          <li>Samsung und die meisten Handys: Einstellungen → Google → Alle Dienste → Werbung</li>
+          <li>Pixel und ab Android 12: Einstellungen → Sicherheit &amp; Datenschutz → Weitere Datenschutzeinstellungen → Werbung</li>
+        </ul>
+        <p>Kopiere «Deine Werbe-ID» und füge sie im Formular ein.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tp-section" id="anmelden">
+    <div class="tp-wrap tp-form-wrap">
+      <div id="view-form">
+        <h2>Anmelden</h2>
+        <form id="signup-form" class="card" novalidate>
+          <div class="field" id="field-name">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required>
+          </div>
+          <div class="field" id="field-email">
+            <label for="email">Google-Adresse (Gmail)</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="320" inputmode="email" required>
+            <p class="hint">Die Adresse, die du bei Google Play nutzt.</p>
+          </div>
+          <div class="field" id="field-adid">
+            <label for="adid">Werbe-ID <span class="optional">(freiwillig)</span></label>
+            <input id="adid" name="adid" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="36" placeholder="38400000-8cf0-11bd-b23e-10b96e40000d">
+          </div>
+          <div class="field" id="field-phone">
+            <label for="phone">Handynummer <span class="optional">(freiwillig)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="32" placeholder="+41 79 123 45 67">
+            <p class="hint">Damit Luca dir per WhatsApp Bescheid geben kann.</p>
+          </div>
+          <div class="alert" id="signup-error" role="alert" hidden></div>
+          <div id="captcha"></div>
+          <button class="button" id="signup-submit" type="submit"><span class="spinner" hidden></span><span>Als Tester anmelden</span></button>
+        </form>
+      </div>
+      <div id="view-done" class="card done" hidden>
+        <h2 tabindex="-1" id="done-title">Danke, du bist angemeldet!</h2>
+        <p>Luca schaltet dich frei und meldet sich. Danach geht's mit Schritt 3 weiter.</p>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer class="tp-footer">
+  <div class="tp-wrap"><a href="../impressum/#de">Impressum</a> · <a href="../privacy/#de">Datenschutzerklärung</a></div>
+</footer>
 </body>
 </html>
