@@ -22,7 +22,8 @@
   const t = {
     errorName: 'Bitte gib deinen Namen ein.',
     errorEmail: 'Bitte gib eine gültige E-Mail-Adresse ein.',
-    errorAdid: 'Das ist keine Werbe-ID. Sie sieht so aus: 38400000-8cf0-11bd-b23e-10b96e40000d. Lass das Feld leer, wenn du unsicher bist.',
+    errorAdid: 'Das ist keine Werbe-ID. Sie sieht so aus: 38400000-8cf0-11bd-b23e-10b96e40000d. Wo du sie findest, steht oben unter «Deine Werbe-ID finden».',
+    errorPhone: 'Bitte gib deine Handynummer ein.',
     errorCaptcha: 'Die Sicherheitsprüfung hat nicht geklappt. Bitte versuch es nochmal.',
     errorNetwork: 'Keine Verbindung. Prüf dein Internet und versuch es nochmal.',
     errorRateLimit: 'Zu viele Versuche. Warte kurz und versuch es nochmal.',
@@ -80,7 +81,8 @@
     const phone = $('phone').value.trim();
     if (!name) { setError(t.errorName, 'field-name'); $('name').focus(); return; }
     if (!EMAIL_PATTERN.test(email)) { setError(t.errorEmail, 'field-email'); $('email').focus(); return; }
-    if (adId && !AD_ID_PATTERN.test(adId)) { setError(t.errorAdid, 'field-adid'); $('adid').focus(); return; }
+    if (!AD_ID_PATTERN.test(adId) || /^[0-]+$/.test(adId)) { setError(t.errorAdid, 'field-adid'); $('adid').focus(); return; }
+    if (phone.replace(/\D/g, '').length < 6) { setError(t.errorPhone, 'field-phone'); $('phone').focus(); return; }
     setError(null);
 
     busy(true);
@@ -92,7 +94,7 @@
         res = await fetch(FUNCTION_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, ad_id: adId || null, phone: phone || null, lang, captcha_token: token }),
+          body: JSON.stringify({ name, email, ad_id: adId, phone, lang, captcha_token: token }),
           cache: 'no-store',
         });
       } catch (e) {
@@ -113,6 +115,7 @@
       else if (code === 'full') setError(t.errorFull);
       else if (code === 'invalid_email') setError(t.errorEmail, 'field-email');
       else if (code === 'invalid_ad_id') setError(t.errorAdid, 'field-adid');
+      else if (code === 'invalid_phone') setError(t.errorPhone, 'field-phone');
       else setError(t.errorGeneric);
     } finally {
       busy(false);
