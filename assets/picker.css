@@ -369,6 +369,7 @@ body.tp main { max-width: none; margin: 0; padding: 0; }
 .tp-steps strong { color: var(--text); font-size: 17px; }
 .tp-link { color: var(--primary); font-weight: 600; text-decoration: none; margin-top: 4px; }
 .tp-link:hover { text-decoration: underline; }
+.tp-lead { max-width: 760px; margin: 0 0 28px; font-size: 1.1rem; color: var(--text); }
 .tp-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
 .tp-cards .card p:last-child { margin-bottom: 0; }
 .tp-cards ul { margin: 0 0 14px; padding-left: 20px; color: var(--text); }
