@@ -333,3 +333,46 @@ html[data-lang="es"] .legal article[lang="es"], html[data-lang="pt"] .legal arti
 /* Headings focused by script (screen readers announce the new view) need no focus ring. */
 h1[tabindex="-1"]:focus { outline: none; }
 .legal a.brand { color: var(--text); text-decoration: none; }
+
+/* Tester sign-up (testen/): steps with numbered junction dots, two info cards, the form. */
+main.tester { max-width: 560px; }
+.tester a.brand { color: var(--text); text-decoration: none; }
+.tester h2 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; color: var(--text); margin: 36px 0 12px; }
+.tester h3 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; font-size: 17px; color: var(--text); margin: 0 0 6px; }
+.tester-steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: 0; }
+.tester-steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0 0 22px 48px;
+  display: grid; gap: 4px;
+  color: var(--text-muted);
+}
+.tester-steps li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: -2px;
+  width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 800; font-size: 15px;
+  background: var(--mint-500); color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.tester-steps li::after {
+  content: ""; position: absolute; left: 15px; top: 34px; bottom: 2px; width: 2px;
+  background: linear-gradient(var(--mint-500), var(--coral-500)); opacity: .45; border-radius: 1px;
+}
+.tester-steps li:last-child { padding-bottom: 0; }
+.tester-steps li:last-child::after { display: none; }
+.tester-steps li:last-child::before { background: var(--coral-500); }
+.tester-steps strong { color: var(--text); font-weight: 600; }
+.tester-steps .button { margin: 10px 0 2px; }
+.button-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); min-height: 52px; font-size: 16px; }
+.callout { margin-top: 16px; }
+.callout p:last-child { margin-bottom: 0; }
+.callout ul { margin: 0 0 12px; padding-left: 20px; color: var(--text); }
+.callout li { margin: 6px 0; }
+.done { border-color: var(--primary); }
+.done h2 { margin-top: 0; }
+.done h2:focus { outline: none; }
+.field .optional { font-weight: 400; color: var(--text-muted); }
+.tester .field input { padding-right: 16px; }
+#adid { font-variant-numeric: tabular-nums; letter-spacing: .01em; }
