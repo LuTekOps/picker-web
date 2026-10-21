@@ -9,7 +9,9 @@
 //    their creation (privacy policy, section 10). The session stays in this browser's localStorage, so coming back
 //    shows the own vote and the results.
 // 3. get_poll / cast_vote, the same RPCs the app uses; RLS and the functions decide what may be seen.
-// The Play button passes the poll id on as install referrer, so the app opens the poll on its first start.
+// The Play badge passes the poll id on as install referrer, so the app opens the poll on its first start. On wide
+// screens with a mouse a QR code (assets/vendor/qrcode.js, drawn here, no external service) carries the poll's link
+// to a phone: there it opens in the app if installed, else on this page again.
 (() => {
   'use strict';
 
@@ -29,6 +31,7 @@
   const TERMS_VERSION = '2026-10-18';
   const MINIMUM_AGE = 16;
   const PLAY_URL = 'https://play.google.com/store/apps/details?id=ch.lutekops.picker';
+  const SHARE_URL = 'https://picker.lutekops.ch/p/'; // App Links host (/.well-known/assetlinks.json)
   const SESSION_KEY = 'picker.webSession';
   const BLOCKED_KEY = 'picker.ageBlocked';
 
@@ -65,7 +68,6 @@
       blockedTitle: 'Picker is for ages 16 and up',
       blockedBody: "Based on your year of birth you can't use Picker yet. We keep no data about you; this browser only remembers this notice.",
       promo: 'Want to ask your own questions? Get the Picker app. It is Android-only for now.',
-      play: 'Get it on Google Play',
     },
     de: {
       title: 'Picker · Umfrage',
@@ -99,7 +101,6 @@
       blockedTitle: 'Picker ist ab 16',
       blockedBody: 'Nach deinem Geburtsjahr kannst du Picker noch nicht nutzen. Wir behalten keine Daten über dich; dieser Browser merkt sich nur diesen Hinweis.',
       promo: 'Selbst etwas fragen? Hol dir die Picker-App. Sie gibt es vorerst nur für Android.',
-      play: 'Bei Google Play laden',
     },
     fr: {
       title: 'Picker · Sondage',
@@ -133,7 +134,6 @@
       blockedTitle: 'Picker, c’est à partir de 16 ans',
       blockedBody: "Selon ton année de naissance, tu ne peux pas encore utiliser Picker. Nous ne conservons aucun renseignement à ton sujet; ce navigateur se souvient seulement de cet avis.",
       promo: "Envie de poser tes propres questions? Télécharge l'app Picker. Elle existe pour l'instant seulement sur Android.",
-      play: 'Disponible sur Google Play',
     },
     it: {
       title: 'Picker · Sondaggio',
@@ -167,7 +167,6 @@
       blockedTitle: 'Picker è dai 16 anni in su',
       blockedBody: 'In base al tuo anno di nascita non puoi ancora usare Picker. Non conserviamo alcun dato su di te; questo browser ricorda solo questo avviso.',
       promo: 'Vuoi fare le tue domande? Scarica l’app Picker. Per ora esiste solo per Android.',
-      play: 'Disponibile su Google Play',
     },
     es: {
       title: 'Picker · Encuesta',
@@ -201,7 +200,6 @@
       blockedTitle: 'Picker es a partir de 16 años',
       blockedBody: 'Según tu año de nacimiento todavía no puedes usar Picker. No conservamos ningún dato sobre ti; este navegador solo recuerda este aviso.',
       promo: '¿Quieres hacer tus propias preguntas? Descarga la app Picker. Por ahora solo existe para Android.',
-      play: 'Disponible en Google Play',
     },
     pt: {
       title: 'Picker · Enquete',
@@ -235,7 +233,6 @@
       blockedTitle: 'O Picker é a partir de 16 anos',
       blockedBody: 'Pelo seu ano de nascimento você ainda não pode usar o Picker. Não guardamos nenhum dado sobre você; este navegador só lembra este aviso.',
       promo: 'Quer fazer suas próprias perguntas? Baixe o app Picker. Por enquanto ele só existe para Android.',
-      play: 'Disponível no Google Play',
     },
   };
 
@@ -252,10 +249,39 @@
   document.title = t.title;
   document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t[el.dataset.i18n]; });
 
-  // ---- The app: Play link with the poll as install referrer, one line in the page's language.
+  // ---- The app: Play link with the poll as install referrer, one line in the page's language, QR code to the poll.
   $('play').href = PLAY_URL + '&referrer=' + encodeURIComponent('poll=' + pollId + '&utm_source=share');
-  $('play').replaceChildren(t.play);
   $('promo-note').textContent = t.promo;
+  drawQr($('qr-code'), SHARE_URL + pollId);
+
+  // Dark modules as one SVG path on a white square with the standard 4-module quiet zone (white in dark mode too,
+  // so every camera reads it). Only DOM calls, no markup strings.
+  function drawQr(svg, text) {
+    if (typeof qrcode !== 'function') return; // vendor script missing: the badge is enough
+    const qr = qrcode(0, 'M');
+    qr.addData(text);
+    qr.make();
+    const n = qr.getModuleCount();
+    const size = n + 8;
+    const d = 'M0 0h' + size + 'v' + size + 'h-' + size + 'z';
+    let ink = '';
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        if (qr.isDark(r, c)) ink += 'M' + (c + 4) + ' ' + (r + 4) + 'h1v1h-1z';
+      }
+    }
+    const NS = 'http://www.w3.org/2000/svg';
+    const bg = document.createElementNS(NS, 'path');
+    bg.setAttribute('d', d);
+    bg.setAttribute('fill', '#ffffff');
+    const fg = document.createElementNS(NS, 'path');
+    fg.setAttribute('d', ink);
+    fg.setAttribute('fill', '#0f172a');
+    svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+    svg.setAttribute('shape-rendering', 'crispEdges');
+    svg.replaceChildren(bg, fg);
+    $('qr').hidden = false;
+  }
 
   // ---- Storage: every access can throw (private mode, blocked site data); the page then just forgets.
   const store = {
