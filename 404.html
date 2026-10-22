@@ -23,6 +23,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/picker.css">
   <script src="/assets/lang.js"></script>
+  <script src="/assets/vendor/qrcode.js" defer></script>
   <script src="/assets/poll.js" defer></script>
 </head>
 <body>
@@ -84,10 +85,19 @@
     <p data-i18n="blockedBody">Based on your year of birth you can't use Picker yet. Nothing was saved about you.</p>
   </section>
 
-  <!-- Always: the app -->
-  <section class="promo">
-    <p><a class="button" id="play" href="https://play.google.com/store/apps/details?id=ch.lutekops.picker&amp;referrer=utm_source%3Dshare"><span class="i18n"><span lang="en">Get it on Google Play</span><span lang="de">Bei Google Play laden</span><span lang="fr">Disponible sur Google Play</span><span lang="it">Disponibile su Google Play</span><span lang="es">Disponible en Google Play</span><span lang="pt">Disponível no Google Play</span></span></a></p>
+  <!-- Always: the app. Official Google Play badge in the page's language (assets/badges, from Google's badge
+       generator, never altered). The QR code (poll.js) carries this poll's link, so a phone opens it in the app if
+       installed, else here; shown only where a phone camera can reach it (wide screen with a mouse). -->
+  <section class="promo get-app">
+    <div class="get-app-row">
+      <div>
+        <p class="get-app-title"><span class="i18n"><span lang="en">Get Picker free for Android</span><span lang="de">Picker gratis für Android</span><span lang="fr">Picker gratuit sur Android</span><span lang="it">Picker gratis per Android</span><span lang="es">Picker gratis para Android</span><span lang="pt">Picker grátis para Android</span></span></p>
+        <a class="play-badge" id="play" href="https://play.google.com/store/apps/details?id=ch.lutekops.picker&amp;referrer=utm_source%3Dshare"><span class="i18n"><img lang="en" src="/assets/badges/google-play-en.png" width="646" height="250" alt="Get it on Google Play"><img lang="de" src="/assets/badges/google-play-de.png" width="646" height="250" alt="Jetzt bei Google Play" loading="lazy"><img lang="fr" src="/assets/badges/google-play-fr.png" width="646" height="250" alt="Disponible sur Google Play" loading="lazy"><img lang="it" src="/assets/badges/google-play-it.png" width="646" height="250" alt="Disponibile su Google Play" loading="lazy"><img lang="es" src="/assets/badges/google-play-es.png" width="646" height="250" alt="Disponible en Google Play" loading="lazy"><img lang="pt" src="/assets/badges/google-play-pt.png" width="646" height="250" alt="Disponível no Google Play" loading="lazy"></span></a>
+      </div>
+      <figure class="qr" id="qr" hidden><svg id="qr-code" role="img" aria-label="QR code"></svg><figcaption><span class="i18n"><span lang="en">On a computer? Scan to open the poll on your phone.</span><span lang="de">Am Computer? Scanne den Code, dann öffnet sich die Umfrage auf dem Handy.</span><span lang="fr">Sur ordinateur? Scanne le code pour ouvrir le sondage sur ton téléphone.</span><span lang="it">Sei al computer? Scansiona il codice per aprire il sondaggio sul telefono.</span><span lang="es">¿En el ordenador? Escanea el código para abrir la encuesta en tu móvil.</span><span lang="pt">No computador? Escaneie o código para abrir a enquete no celular.</span></span></figcaption></figure>
+    </div>
     <p class="note" id="promo-note"><span class="i18n"><span lang="en">The Picker app is Android-only for now. Already installed? Tap the link again.</span><span lang="de">Picker gibt es als App vorerst nur für Android. Schon installiert? Tippe den Link nochmals an.</span><span lang="fr">Pour l'instant, l'app Picker existe seulement sur Android. Déjà installée? Touche à nouveau le lien.</span><span lang="it">Per ora l'app Picker esiste solo per Android. Già installata? Tocca di nuovo il link.</span><span lang="es">Por ahora la app Picker solo existe para Android. ¿Ya la tienes instalada? Toca el enlace otra vez.</span><span lang="pt">Por enquanto o app Picker só existe para Android. Já instalou? Toque no link de novo.</span></span></p>
+    <p class="trademark"><span class="i18n"><span lang="en">Google Play and the Google Play logo are trademarks of Google LLC.</span><span lang="de">Google Play und das Google Play-Logo sind Marken von Google LLC.</span><span lang="fr">Google Play et le logo Google Play sont des marques de Google LLC.</span><span lang="it">Google Play e il logo Google Play sono marchi di Google LLC.</span><span lang="es">Google Play y el logotipo de Google Play son marcas de Google LLC.</span><span lang="pt">Google Play e o logotipo do Google Play são marcas da Google LLC.</span></span></p>
   </section>
 
   <p class="footer"><span class="i18n"><a lang="en" href="/impressum/#en">Legal notice</a><a lang="de" href="/impressum/#de">Impressum</a><a lang="fr" href="/impressum/#fr">Mentions légales</a><a lang="it" href="/impressum/#it">Note legali</a><a lang="es" href="/impressum/#es">Aviso legal</a><a lang="pt" href="/impressum/#pt">Informações legais</a></span> · <span class="i18n"><a lang="en" href="/privacy/#en">Privacy Policy</a><a lang="de" href="/privacy/#de">Datenschutzerklärung</a><a lang="fr" href="/privacy/#fr">Politique de confidentialité</a><a lang="it" href="/privacy/#it">Informativa sulla privacy</a><a lang="es" href="/privacy/#es">Política de privacidad</a><a lang="pt" href="/privacy/#pt">Política de privacidade</a></span> · <span class="i18n"><a lang="en" href="/terms/#en">Terms of Use</a><a lang="de" href="/terms/#de">Nutzungsbedingungen</a><a lang="fr" href="/terms/#fr">Conditions d'utilisation</a><a lang="it" href="/terms/#it">Condizioni d'uso</a><a lang="es" href="/terms/#es">Condiciones de uso</a><a lang="pt" href="/terms/#pt">Termos de uso</a></span></p>
