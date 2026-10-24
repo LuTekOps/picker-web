@@ -467,3 +467,8 @@ body:has(.screens) { container-type: inline-size; }
 }
 .phone-frame img { width: 100%; height: auto; border-radius: 23px; vertical-align: top; }
 .phone figcaption { margin-top: 10px; font-size: 13px; line-height: 1.35; text-align: center; color: var(--text-muted); }
+
+/* Promo clip (index.html): one phone frame, centered, below the screens strip. */
+.clip { margin: 0 auto 28px; max-width: 440px; }
+.clip-phone { width: min(280px, 72vw); margin: 0 auto; }
+.phone-frame video { width: 100%; height: auto; border-radius: 23px; vertical-align: top; background: #0b1020; }
