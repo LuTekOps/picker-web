@@ -440,3 +440,30 @@ body.tp main { max-width: none; margin: 0; padding: 0; }
   .get-app-row { flex-direction: column; align-items: flex-start; gap: 0; }
 }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* App screens (index.html): phone frames in a strip as wide as the window (up to 920px), scroll-snapped on
+   small screens, centered when they all fit. The body is the size container, so 100cqw excludes the scrollbar. */
+body:has(.screens) { container-type: inline-size; }
+.screens { width: min(100cqw, 920px); margin: 4px 0 28px calc(50% - min(50cqw, 460px)); }
+.screens-label {
+  font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted); margin: 0 auto 12px; padding: 0 20px; max-width: 440px;
+}
+.screens-list {
+  list-style: none; margin: 0; padding: 4px 16px 12px;
+  display: flex; gap: 12px;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 16px;
+  scrollbar-width: thin; scrollbar-color: var(--outline-strong) transparent;
+}
+.screens-list > li { flex: 0 0 clamp(156px, 50vw, 200px); scroll-snap-align: start; }
+.screens-list > li:first-child { margin-left: auto; }
+.screens-list > li:last-child { margin-right: auto; }
+.screens-list:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; border-radius: 8px; }
+.phone { margin: 0; }
+.phone-frame {
+  display: block; line-height: 0; padding: 5px;
+  background: var(--surface); border: 1px solid var(--outline-strong); border-radius: 28px;
+}
+.phone-frame img { width: 100%; height: auto; border-radius: 23px; vertical-align: top; }
+.phone figcaption { margin-top: 10px; font-size: 13px; line-height: 1.35; text-align: center; color: var(--text-muted); }
