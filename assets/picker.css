@@ -1,9 +1,17 @@
-/* Picker web pages ("Clear Pick"): same tokens as the app theme (ui/theme/Color.kt). The chrome is black and
-   white (true black, pure white, hairlines); Mint and Coral appear only where they carry data (option A and B).
-   Actions are ink: black on light, white on dark. Dark is the default. */
+/* Picker web pages ("Clear Pick", web look "Circuit"): same tokens as the app theme (ui/theme/Color.kt). The chrome
+   is black and white (pure white, true black, hairlines) on a faint circuit grid; Mint and Coral carry data (option
+   A and B) and the logo's traces. Actions are ink: black on light, white on dark. Light is the default, dark follows
+   the system setting. */
 @font-face {
   font-family: "Geist";
   src: url("fonts/geist.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+/* Geist Mono (same OFL license as Geist, fonts/OFL-Geist.txt), latin subset: labels, numbers, the ticker. */
+@font-face {
+  font-family: "Geist Mono";
+  src: url("fonts/geist-mono-latin.woff2") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -36,47 +44,53 @@
   --red-600: #dc2626;
   --red-900: #7f1d1d;
 
-  /* Roles (dark scheme) */
-  --bg: var(--black);
-  --surface: var(--moss-900);
-  --surface-high: var(--moss-850);
-  --text: var(--snow);
-  --text-muted: var(--fog);
-  --outline: var(--moss-800);
-  --outline-strong: var(--moss-700);
-  --action: var(--snow);            /* vote, sign up, save */
-  --on-action: var(--black);
-  --option-a: var(--mint-400);
-  --option-b: var(--coral-400);
-  --on-option: var(--slate-900);    /* "ink on neon" */
-  --accent: var(--mint-400);        /* accent text (taglines, live) */
+  /* Roles (light scheme, the default) */
+  --bg: var(--white);
+  --surface: var(--mist-50);
+  --surface-high: var(--mist-100);
+  --text: var(--ink-900);
+  --text-muted: var(--graphite);
+  --outline: var(--mist-200);
+  --outline-strong: var(--mist-300);
+  --action: var(--ink-900);
+  --on-action: var(--white);
+  --option-a: var(--mint-500);
+  --option-b: var(--coral-500);
+  --accent: var(--mint-700);
+  --error: var(--red-600);
+  --error-container: var(--red-100);
+  --on-error-container: var(--red-900);
+  --focus: var(--ink-900);
+  --on-option: var(--slate-900);
   --ink: var(--slate-900);
-  --error: var(--red-400);
-  --error-container: var(--red-900);
-  --on-error-container: var(--red-100);
-  --focus: var(--snow);
-  color-scheme: dark;
+  --accent-b: var(--coral-700);     /* coral text (chips, ticker) */
+  --grid: #eceeed;                  /* Circuit grid behind the top of every page */
+  --glow: rgba(15, 23, 42, .12);    /* shadow under the phone frames */
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg: var(--white);
-    --surface: var(--mist-50);
-    --surface-high: var(--mist-100);
-    --text: var(--ink-900);
-    --text-muted: var(--graphite);
-    --outline: var(--mist-200);
-    --outline-strong: var(--mist-300);
-    --action: var(--ink-900);
-    --on-action: var(--white);
-    --option-a: var(--mint-500);
-    --option-b: var(--coral-500);
-    --accent: var(--mint-700);
-    --error: var(--red-600);
-    --error-container: var(--red-100);
-    --on-error-container: var(--red-900);
-    --focus: var(--ink-900);
-    color-scheme: light;
+    --bg: var(--black);
+    --surface: var(--moss-900);
+    --surface-high: var(--moss-850);
+    --text: var(--snow);
+    --text-muted: var(--fog);
+    --outline: var(--moss-800);
+    --outline-strong: var(--moss-700);
+    --action: var(--snow);
+    --on-action: var(--black);
+    --option-a: var(--mint-400);
+    --option-b: var(--coral-400);
+    --accent: var(--mint-400);
+    --error: var(--red-400);
+    --error-container: var(--red-900);
+    --on-error-container: var(--red-100);
+    --focus: var(--snow);
+    --accent-b: var(--coral-400);
+    --grid: #151816;
+    --glow: rgba(16, 185, 129, .18);
+    color-scheme: dark;
   }
 }
 
@@ -92,6 +106,21 @@ body {
   font: 16px/1.55 "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+/* The Circuit grid: 48px hairline squares, fading out below the top of the page. */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 720px;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 75%);
 }
 
 a { color: var(--text); text-underline-offset: 3px; text-decoration-color: var(--outline-strong); }
@@ -293,7 +322,7 @@ form { margin-top: 24px; display: grid; gap: 16px; }
 
 /* Get the app (every page): Google's official badge as is (its clear space is part of the image),
    plus a QR code only where a phone camera can reach it: a wide screen used with a mouse. */
-.get-app { margin-top: 40px; padding: 20px; background: var(--surface); border: 1px solid var(--outline); border-radius: 18px; }
+.get-app { margin-top: 40px; padding: 20px; background: linear-gradient(135deg, color-mix(in srgb, var(--option-a) 12%, var(--bg)), color-mix(in srgb, var(--option-b) 10%, var(--bg))); border: 1px solid var(--outline); border-radius: 18px; }
 .get-app-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .get-app-title { font-weight: 600; font-size: 18px; letter-spacing: -0.02em; color: var(--text); margin: 0 0 8px; }
 .play-badge { display: inline-block; line-height: 0; border-radius: 10px; margin-left: -10px; }
@@ -310,18 +339,17 @@ form { margin-top: 24px; display: grid; gap: 16px; }
 /* Landing page (index.html, 404.html) */
 .hero { text-align: left; }
 .tagline {
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  font: 400 13px/1.4 "Geist Mono", ui-monospace, Menlo, monospace;
+  color: var(--accent);
   margin: 0 0 10px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 /* The live dot: the one bit of color in the chrome, like the "live" pill in the app. */
-.tagline::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--option-a); }
+.tagline::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--option-a); box-shadow: 0 0 10px var(--option-a); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .tagline::before { animation: none; } }
 .motto { font-size: 18px; color: var(--text-muted); margin: 0 0 28px; }
 
 /* A/B example: option badges (never color alone) and a tug bar with tabular numbers. */
@@ -472,3 +500,115 @@ body:has(.screens) { container-type: inline-size; }
 .clip { margin: 0 auto 28px; max-width: 440px; }
 .clip-phone { width: min(280px, 72vw); margin: 0 auto; }
 .phone-frame video { width: 100%; height: auto; border-radius: 23px; vertical-align: top; background: #0b1020; }
+
+/* ---------- Landing page (index.html), look "Circuit" ----------
+   Wide layout: nav, hero with the logo's traces drawn large (they draw themselves once on load), a ticker of
+   example polls, a bento grid of features with real app screens, the promo clip and the get-app block. */
+main.lp { max-width: 1120px; padding: 0 24px 48px; }
+.lp-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; }
+.lp-nav .brand { margin: 0; font-size: 24px; gap: 10px; }
+.lp-nav .brand .mark { width: 32px; height: 32px; }
+.lp-status { font: 400 12px "Geist Mono", ui-monospace, Menlo, monospace; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+.lp-status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--option-a); box-shadow: 0 0 10px var(--option-a); animation: pulse 1.6s ease-in-out infinite; }
+
+.lp-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding: 48px 0 56px; }
+.lp-hero .tagline { margin-bottom: 18px; }
+.lp-hero h1 { font-size: clamp(44px, 6.6vw, 84px); line-height: .98; letter-spacing: -0.045em; margin: 0 0 22px; }
+.lp-hero h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--option-a), var(--option-b));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.lp-hero .motto { max-width: 36ch; margin-bottom: 28px; }
+.lp-ctas { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.lp-ctas .play-badge { margin-left: -10px; }
+.lp-ghost {
+  font: 500 14px "Geist Mono", ui-monospace, Menlo, monospace; color: var(--text); text-decoration: none;
+  border: 1px solid var(--outline-strong); padding: 13px 16px; border-radius: 12px; background: var(--bg);
+}
+.lp-ghost:hover { background: var(--surface); }
+
+/* Hero art: the Circuit mark as line art. Colors come from the tokens, so it follows light and dark. */
+.lp-art { position: relative; display: grid; place-items: center; min-width: 0; }
+.lp-art svg { width: min(100%, 420px); height: auto; overflow: visible; }
+.lp-art .t { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 120; stroke-dashoffset: 120; animation: draw 1.6s cubic-bezier(.6, 0, .2, 1) forwards; }
+.lp-art .ring { fill: none; stroke-width: 1.6; }
+.lp-art .a { stroke: var(--option-a); } .lp-art .b { stroke: var(--option-b); } .lp-art .ab { stroke: url(#lp-ab); }
+.lp-art .t2 { animation-delay: .25s; } .lp-art .t3 { animation-delay: .5s; } .lp-art .t4 { animation-delay: .75s; }
+.lp-art .junction { fill: var(--text); }
+.lp-art .stop-a { stop-color: var(--option-a); } .lp-art .stop-b { stop-color: var(--option-b); }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.lp-chip {
+  position: absolute; font: 500 13px "Geist Mono", ui-monospace, Menlo, monospace; padding: 8px 12px; border-radius: 10px;
+  background: var(--bg); border: 1px solid var(--outline); box-shadow: 0 8px 24px var(--glow); white-space: nowrap;
+}
+.lp-chip-a { left: 0; bottom: 16%; color: var(--accent); }
+.lp-chip-b { right: 0; top: 48%; color: var(--accent-b); }
+
+/* Ticker: example polls with their A/B split, full window width, loops (two copies, -50%). */
+.lp-ticker { margin: 0 calc(50% - 50vw); border-block: 1px solid var(--outline); overflow: hidden; padding: 14px 0; white-space: nowrap; background: var(--bg); }
+.lp-ticker-track { display: inline-flex; gap: 48px; padding-left: 48px; animation: tick 40s linear infinite; font: 400 14px "Geist Mono", ui-monospace, Menlo, monospace; color: var(--text-muted); }
+.lp-ticker-track b { color: var(--text); font-weight: 500; }
+.lp-ticker .ma { color: var(--accent); } .lp-ticker .mb { color: var(--accent-b); }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* Bento grid: the Pick Tank tile spans two rows, the others peek a phone from the bottom edge. */
+.lp-bento { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; padding: 56px 0 16px; }
+.lp-tile { background: var(--surface); border: 1px solid var(--outline); border-radius: 22px; padding: 24px; display: flex; flex-direction: column; gap: 10px; min-width: 0; overflow: hidden; }
+.lp-tile h2, .lp-tile h3 { margin: 0; font-weight: 600; font-size: 20px; letter-spacing: -0.02em; color: var(--text); }
+.lp-tile p { margin: 0; line-height: 1.5; font-size: 15px; }
+.lp-tall { grid-row: span 2; }
+.lp-label { font: 400 13px "Geist Mono", ui-monospace, Menlo, monospace; color: var(--text-muted); margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+.lp-label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--option-a), var(--option-b) 60%, transparent); }
+.lp-tile .phone-frame { background: #000; border-color: #2a2e2c; box-shadow: 0 30px 80px var(--glow); }
+.lp-tall .phone { width: min(100%, 250px); margin: 16px auto 0; }
+.lp-peek { width: min(100%, 170px); margin: 14px auto -60px; }
+.lp-stat { font: 600 48px/1 "Geist", system-ui, sans-serif; letter-spacing: -0.04em; color: var(--text); }
+.lp-stat small { display: block; margin-top: 8px; font: 400 13px "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: 0; color: var(--text-muted); }
+
+/* Try-it poll (assets/landing.js): tap an option, it gets one more vote. Bars are the A/B fills. */
+.lp-poll { display: grid; gap: 8px; margin-top: 6px; }
+.lp-opt {
+  appearance: none; position: relative; overflow: hidden; display: flex; justify-content: space-between; gap: 12px;
+  border: 1px solid var(--outline-strong); border-radius: 12px; padding: 12px 14px; background: var(--bg);
+  font: 500 15px "Geist", system-ui, sans-serif; color: var(--text); cursor: pointer; text-align: left;
+}
+.lp-opt:hover { border-color: var(--text-muted); }
+.lp-opt:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.lp-opt > span { position: relative; }
+.lp-opt .fill { position: absolute; inset: 0 auto 0 0; opacity: .22; transition: width .6s cubic-bezier(.2, .8, .2, 1); }
+.lp-opt-a .fill { background: var(--option-a); width: 62%; } .lp-opt-b .fill { background: var(--option-b); width: 38%; }
+.lp-opt .pct { font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-weight: 500; }
+.lp-opt[aria-pressed="true"] { border-color: var(--text); }
+.lp-votes { font: 400 12px "Geist Mono", ui-monospace, Menlo, monospace; color: var(--text-muted); margin: 2px 0 0; }
+
+/* Clip + get-app side by side on wide screens. */
+.lp-end { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; padding-top: 40px; }
+.lp-end .get-app { margin-top: 0; padding: clamp(22px, 4vw, 40px); border-radius: 24px; }
+.lp-end .get-app-title { font-size: clamp(26px, 3.6vw, 40px); letter-spacing: -0.04em; margin-bottom: 16px; }
+.lp-end .clip { margin: 0; max-width: none; }
+.lp-end .clip .screens-label { padding: 0; text-align: center; font: 400 13px "Geist Mono", ui-monospace, Menlo, monospace; text-transform: none; letter-spacing: 0; }
+.lp-end .clip-phone { width: min(260px, 72vw); }
+.lp-end .clip .phone-frame { background: #000; border-color: #2a2e2c; box-shadow: 0 30px 80px var(--glow); }
+main.lp > .note { margin: 24px 0 0; }
+main.lp .footer { font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-size: 12px; }
+
+@media (max-width: 900px) {
+  .lp-hero { grid-template-columns: 1fr; padding-top: 24px; }
+  .lp-art svg { width: min(80%, 340px); }
+  .lp-bento { grid-template-columns: 1fr 1fr; }
+  .lp-tall { grid-column: span 2; grid-row: auto; }
+  .lp-end { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  main.lp { padding: 0 16px 40px; }
+  .lp-status { display: none; }
+  .lp-bento { grid-template-columns: 1fr; }
+  .lp-tall { grid-column: auto; }
+  .lp-chip { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lp-art .t { animation: none; stroke-dashoffset: 0; }
+  .lp-ticker-track, .lp-status::before { animation: none; }
+  .lp-opt .fill { transition: none; }
+}
